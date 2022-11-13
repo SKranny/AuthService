@@ -1,0 +1,22 @@
+server:
+  port: 80
+springdoc:
+  swagger-ui:
+    path: /docs/
+logging:
+  level:
+    main: DEBUG
+spring:
+  datasource:
+    password:
+    username:
+    url: jdbc:postgresql://localhost:5432/
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: update
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
