@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("test")
+@RequestMapping("/test")
 @Tag(name="Контроллер получения токена", description="Методы связанные с получением токена авторизации для пользователя")
 public class JwtController {
 
