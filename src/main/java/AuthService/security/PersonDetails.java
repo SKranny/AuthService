@@ -1,8 +1,5 @@
 package AuthService.security;
 
-import AuthService.constants.MessagePermission;
-import AuthService.dto.location.City;
-import AuthService.dto.location.Country;
 import AuthService.dto.person.Person;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
@@ -12,39 +9,17 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Builder
 @Data
 public class PersonDetails implements UserDetails {
     private Long id;
-
     private String firstName;
 
     private String lastName;
 
-    private Long regDate;
-
-    private Long birthDate;
-
     private String email;
-
-    private String phone;
-
-    private String photo;
-
-    private String about;
-
-    private City city;
-
-    private Country country;
-
-    private MessagePermission messagePermission;
-
-    private Long lastOnlineTime;
-
-    private Boolean isBlocked;
 
     private List<Role> roles;
 
@@ -78,26 +53,7 @@ public class PersonDetails implements UserDetails {
                 .id(person.getId())
                 .firstName(person.getFirstName())
                 .lastName(person.getLastName())
-                .regDate(person.getRegDate())
-                .birthDate(person.getBirthDate())
                 .email(person.getEmail())
-                .phone(person.getPhone())
-                .photo(person.getPhoto())
-                .about(person.getAbout())
-                .city(Optional.ofNullable(person.getCity())
-                        .map(c -> City.builder()
-                                .id(c.getId())
-                                .title(c.getTitle())
-                                .build())
-                        .orElse(null))
-                .country(Optional.ofNullable(person.getCountry())
-                        .map(c -> Country.builder()
-                                .id(c.getId())
-                                .title(c.getTitle())
-                                .build())
-                        .orElse(null))
-                .messagePermission(person.getMessagePermission())
-                .lastOnlineTime(person.getLastOnlineTime())
                 .blocked(person.getIsBlocked())
                 .password(person.getPassword())
                 .authorities(person.getRoles().stream()

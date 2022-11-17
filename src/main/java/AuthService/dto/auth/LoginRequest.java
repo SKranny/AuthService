@@ -13,8 +13,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequest {
-    @NotBlank
     @Email
+    @NotBlank
     private String email;
 
     @NotBlank

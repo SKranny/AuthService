@@ -8,7 +8,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -31,7 +30,7 @@ public class JwtPerRequestFilter extends OncePerRequestFilter {
 
         String token = TokenUtil.parseToken(request);
 
-        if (Optional.ofNullable(token).isPresent() && !jwtService.isBlockedToken(token)) {
+        if (Optional.ofNullable(token).isPresent()) {
             String email = jwtService.getEmailFromToken(token);
 
             UserDetails userDetails = personDetailsService.loadUserByUsername(email);

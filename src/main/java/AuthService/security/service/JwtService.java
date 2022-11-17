@@ -3,7 +3,6 @@ package AuthService.security.service;
 import AuthService.security.PersonDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,9 +23,6 @@ public class JwtService {
 
     @Value("${jwt.life-time}")
     private Long lifeTime;
-
-    //Todo: move to redis
-    Set<String> blackList = new HashSet<>();
 
     public String generateJwtToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -62,16 +58,10 @@ public class JwtService {
         return claimResolver.apply(getAllClaimsFromToken(token));
     }
 
-    @SneakyThrows
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-    }
-
-    public void blockToken(String token) {
-        blackList.add(token);
-    }
-
-    public boolean isBlockedToken(String token) {
-        return blackList.contains(token);
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
