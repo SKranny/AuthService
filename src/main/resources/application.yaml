@@ -1,9 +1,5 @@
 #Синтаксис переменной окружения ${имя_переменной:значение_переменной_по_умолчанию}
 spring:
-  application:
-    name: personFeignClient
-    config:
-      import: http:/localhost:8080/api/v1/account
   redis:
     port: 6379
   mail:
@@ -30,6 +26,7 @@ server:
     key-store-type: ${SA_PORTAL_BACKEND_KEY_STORE_TYPE:PKCS12}
     key-store: file:${SA_PORTAL_BACKEND_KEY_STORE_PATH}
     key-store-password: ${SA_PORTAL_BACKEND_KEY_STORE_PASSWORD}
+
 springdoc:
   swagger-ui:
     path: /docs/

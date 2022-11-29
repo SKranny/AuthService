@@ -10,6 +10,7 @@ import AuthService.service.person.PersonService;
 import AuthService.service.mail.MailService;
 import AuthService.service.recovery.RecoveryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
@@ -59,19 +61,13 @@ public class AuthService {
 
     }
 
-    private Set<RoleType> buildDefaultRoles() {
-        return new HashSet<>() {{
-            add(RoleType.ROLE_USER);
-        }};
-    }
-
     private PersonDTO buildCustomer(RegisterRequest request) {
         return PersonDTO.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .roles(buildDefaultRoles())
+                .roles(Collections.singleton(RoleType.ROLE_USER))
                 .build();
     }
 
@@ -81,7 +77,7 @@ public class AuthService {
 
         personService.createPerson(buildCustomer(request));
 
-        return this.login(LoginRequest.builder()
+        return login(LoginRequest.builder()
                     .email(request.getEmail())
                     .password(request.getPassword())
                 .build());
@@ -94,8 +90,10 @@ public class AuthService {
     }
 
     public void createRecoveryPassRequest(String email) {
-        mailService.sendRecoveryMail(new String[]{email},
-                recoveryService.createRecoveryPassRequest(email).getUuid());
+        if (personService.getPersonDTOByEmail(email) != null) {
+            mailService.sendRecoveryMail(new String[]{email},
+                    recoveryService.createRecoveryPassRequest(email).getUuid());
+        }
     }
 
 }
