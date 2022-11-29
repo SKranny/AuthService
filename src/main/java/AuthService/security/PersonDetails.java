@@ -1,6 +1,7 @@
 package AuthService.security;
 
-import AuthService.dto.person.Person;
+import AuthService.constants.RoleType;
+import AuthService.dto.person.PersonDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
@@ -20,8 +21,6 @@ public class PersonDetails implements UserDetails {
     private String lastName;
 
     private String email;
-
-    private List<Role> roles;
 
     @JsonIgnore
     private String password;
@@ -48,16 +47,16 @@ public class PersonDetails implements UserDetails {
         return String.format("%s %s", lastName, firstName);
     }
 
-    public static PersonDetails build(Person person) {
+    public static PersonDetails build(PersonDTO personDTO) {
         return PersonDetails.builder()
-                .id(person.getId())
-                .firstName(person.getFirstName())
-                .lastName(person.getLastName())
-                .email(person.getEmail())
-                .blocked(person.getIsBlocked())
-                .password(person.getPassword())
-                .authorities(person.getRoles().stream()
-                        .map(Role::name)
+                .id(personDTO.getId())
+                .firstName(personDTO.getFirstName())
+                .lastName(personDTO.getLastName())
+                .email(personDTO.getEmail())
+                .blocked(personDTO.getIsBlocked())
+                .password(personDTO.getPassword())
+                .authorities(personDTO.getRoles().stream()
+                        .map(RoleType::name)
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList()))
                 .build();

@@ -1,20 +1,36 @@
 package AuthService.service.auth;
 
 import AuthService.dto.auth.LoginRequest;
+import AuthService.dto.auth.RegisterRequest;
+import AuthService.dto.person.PersonDTO;
 import AuthService.security.PersonDetails;
+import AuthService.constants.RoleType;
 import AuthService.security.service.JwtService;
+import AuthService.service.person.PersonService;
+import AuthService.service.mail.MailService;
+import AuthService.service.recovery.RecoveryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+    private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationProvider authenticationProvider;
+
+    private final PersonService personService;
+
+    private final MailService mailService;
+
+    private final RecoveryService recoveryService;
 
     private final JwtService jwtService;
 
@@ -31,6 +47,56 @@ public class AuthService {
         if (personDetails.isBlocked()) {
             throw new RuntimeException("Error! User is blocked!");
         }
+    }
+
+    private void assertPasswordEqual(String password, String confirmPassword) {
+        if (!Optional.ofNullable(password).equals(Optional.ofNullable(confirmPassword))) {
+            throw new RuntimeException("Error! Passwords is not equals");
+        }
+    }
+
+    private void assertCodeEqual(String code) {
+
+    }
+
+    private Set<RoleType> buildDefaultRoles() {
+        return new HashSet<>() {{
+            add(RoleType.ROLE_USER);
+        }};
+    }
+
+    private PersonDTO buildCustomer(RegisterRequest request) {
+        return PersonDTO.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .roles(buildDefaultRoles())
+                .build();
+    }
+
+    public String createCustomer(RegisterRequest request) {
+        assertPasswordEqual(request.getPassword(), request.getConfirmPassword());
+        assertCodeEqual(request.getCode());
+
+        PersonDTO personDTO = buildCustomer(request);
+        personService.createPerson(buildCustomer(request));
+
+        return this.login(LoginRequest.builder()
+                    .email(request.getEmail())
+                    .password(request.getPassword())
+                .build());
+    }
+
+    public void resetPass(String uuid, String password) {
+        PersonDTO personDTO = personService.getPersonDTOByEmail(recoveryService.getAndDeleteRecoveryPassRequest(uuid).getEmail());
+        personDTO.setPassword(passwordEncoder.encode(password));
+        personService.updateCustomer(personDTO);
+    }
+
+    public void createRecoveryPassRequest(String email) {
+        mailService.sendRecoveryMail(new String[]{email},
+                recoveryService.createRecoveryPassRequest(email).getUuid());
     }
 
 }
