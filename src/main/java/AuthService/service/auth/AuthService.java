@@ -79,7 +79,6 @@ public class AuthService {
         assertPasswordEqual(request.getPassword(), request.getConfirmPassword());
         assertCodeEqual(request.getCode());
 
-        PersonDTO personDTO = buildCustomer(request);
         personService.createPerson(buildCustomer(request));
 
         return this.login(LoginRequest.builder()
