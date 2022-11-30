@@ -1,11 +1,32 @@
 #Синтаксис переменной окружения ${имя_переменной:значение_переменной_по_умолчанию}
 spring:
+  redis:
+    port: 6379
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_LOGIN}
+    password: ${MAIL_PASSWORD} #Это пароль от почты для ПРИЛОЖЕНИЯ, которые выдается гуглом
+    properties:
+      mail:
+        smtp:
+          ssl:
+            protocols: TLSv1.2
+          auth: true
+          starttls:
+            enable: true
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 
 server:
   port: ${SERVER_PORT}
+  ssl:
+    enabled: ${SA_PORTAL_BACKEND_SSL_ENABLED:false}
+    key-store-type: ${SA_PORTAL_BACKEND_KEY_STORE_TYPE:PKCS12}
+    key-store: file:${SA_PORTAL_BACKEND_KEY_STORE_PATH}
+    key-store-password: ${SA_PORTAL_BACKEND_KEY_STORE_PASSWORD}
+
 springdoc:
   swagger-ui:
     path: /docs/
@@ -13,3 +34,11 @@ springdoc:
 jwt:
   secret-code: ${SECRET_KEY}
   life-time: ${LIFE_TIME}
+
+client:
+  person:
+    base-url: http://localhost:8080/api/v1/account
+
+auth:
+  service:
+    base-url: "http://localhost:%s/"
