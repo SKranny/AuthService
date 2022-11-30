@@ -5,10 +5,12 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 public class RegisterRequest {
     @Email
+    @NotBlank
     private String email;
 
     @JsonProperty(value = "password1", required = true)
@@ -23,5 +25,6 @@ public class RegisterRequest {
     @NotBlank
     private String lastName;
 
+    @Size(min = 4, max = 6)
     private String code;
 }

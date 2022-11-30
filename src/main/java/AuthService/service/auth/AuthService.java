@@ -40,7 +40,12 @@ public class AuthService {
         Authentication authentication = authenticationProvider
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+        return buildJwtToken(personDetails);
+    }
+
+    private String buildJwtToken(PersonDetails personDetails) {
         assertBlockCondition(personDetails);
         return jwtService.generateJwtToken(personDetails);
     }
@@ -75,12 +80,7 @@ public class AuthService {
         assertPasswordEqual(request.getPassword(), request.getConfirmPassword());
         assertCodeEqual(request.getCode());
 
-        personService.createPerson(buildCustomer(request));
-
-        return login(LoginRequest.builder()
-                    .email(request.getEmail())
-                    .password(request.getPassword())
-                .build());
+        return buildJwtToken(PersonDetails.build(personService.createPerson(buildCustomer(request))));
     }
 
     public void resetPass(String uuid, String password) {
