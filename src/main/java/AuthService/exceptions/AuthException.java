@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 @Slf4j
 @Getter
 public class AuthException extends RuntimeException{
-    private HttpStatus status;
+    private final HttpStatus status;
 
     public AuthException(String message, HttpStatus status) {
         super(message);
