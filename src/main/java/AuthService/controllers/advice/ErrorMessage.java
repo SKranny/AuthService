@@ -1,4 +1,4 @@
-package AuthService.dto.location;
+package AuthService.controllers.advice;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressDTO {
-    private Long id;
+public class ErrorMessage {
+    private String error;
 
-    private String city;
-
-    private String country;
+    private Long timeStamp;
 }

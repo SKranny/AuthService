@@ -1,4 +1,4 @@
-package AuthService.controller;
+package AuthService.controllers;
 
 import AuthService.util.captcha.CaptchaUtil;
 import AuthService.dto.auth.CaptchaResponse;

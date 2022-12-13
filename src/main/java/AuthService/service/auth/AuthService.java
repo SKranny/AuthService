@@ -1,5 +1,6 @@
 package AuthService.service.auth;
 
+import AuthService.exceptions.AuthException;
 import AuthService.dto.auth.LoginRequest;
 import AuthService.dto.auth.RegisterRequest;
 import AuthService.dto.person.PersonDTO;
@@ -52,13 +53,13 @@ public class AuthService {
 
     private void assertBlockCondition(PersonDetails personDetails) {
         if (personDetails.isBlocked()) {
-            throw new RuntimeException("Error! User is blocked!");
+            throw new AuthException("Error! User is blocked!");
         }
     }
 
     private void assertPasswordEqual(String password, String confirmPassword) {
         if (!Optional.ofNullable(password).equals(Optional.ofNullable(confirmPassword))) {
-            throw new RuntimeException("Error! Passwords is not equals");
+            throw new AuthException("Error! Passwords is not equals");
         }
     }
 
