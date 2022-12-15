@@ -28,9 +28,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors().disable()
                 .authorizeHttpRequests(config -> {
                     config.antMatchers("/api/v1/auth/**").permitAll();
-                    config.anyRequest().authenticated();
+                    config.anyRequest().permitAll();
                 })
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
