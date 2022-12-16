@@ -33,6 +33,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers().frameOptions().disable()
+                .and()
                 .authorizeHttpRequests(config -> {
                     config.antMatchers("/api/v1/auth/**").permitAll();
                     config.anyRequest().permitAll();
