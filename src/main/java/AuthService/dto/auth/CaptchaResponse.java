@@ -10,12 +10,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Капча")
+@Schema(description = "Распознавание капчи")
 public class CaptchaResponse {
+    @Schema(description = "Токен")
     private String token;
 
     @Builder.Default
+    @Schema(description = "Тип")
     private String contentType = "image/jpeg";
-
+    @Schema(description = "Капча")
     private byte[] captcha;
 }
