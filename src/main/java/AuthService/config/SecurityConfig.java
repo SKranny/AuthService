@@ -43,6 +43,8 @@ public class SecurityConfig {
                 .and()
                 .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPointResolver)
                 .and()
+                .cors()
+                .and()
                 .build();
     }
 
