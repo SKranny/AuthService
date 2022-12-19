@@ -1,5 +1,6 @@
 package AuthService.dto.auth;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Логин")
 public class LoginRequest {
     @Email
     @NotBlank
