@@ -31,14 +31,12 @@ public class AuthController {
     public void createRecoveryPassRequest(@Valid @Email @RequestParam(name = "email") String email) {
         authService.createRecoveryPassRequest(email);
     }
-
     @PostMapping("/password/recovery/{recoveryLink}")
     public void recoveryPassword(@PathVariable("recoveryLink") String recoveryLink,
                                  @RequestParam(name = "pass") String password) {
         authService.resetPass(recoveryLink, password);
     }
-
-    @GetMapping(value = "/captcha")
+    @GetMapping( "/captcha")
     public CaptchaResponse getCaptcha() {
         return CaptchaUtil.generateCaptcha();
     }

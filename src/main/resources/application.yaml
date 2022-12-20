@@ -27,10 +27,8 @@ spring:
 server:
   port: ${SERVER_PORT:8082}
   ssl:
-    enabled: ${SA_PORTAL_BACKEND_SSL_ENABLED:false}
-    key-store-type: ${SA_PORTAL_BACKEND_KEY_STORE_TYPE:PKCS12}
-    key-store: file:${SA_PORTAL_BACKEND_KEY_STORE_PATH}
-    key-store-password: ${SA_PORTAL_BACKEND_KEY_STORE_PASSWORD}
+    enabled: false
+    key-store-type: PKCS12
 
 springdoc:
   swagger-ui:
