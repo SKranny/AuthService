@@ -10,3 +10,4 @@ notify-job:
     stage: notify
     script:
         - echo "Я работаю"
+        - pwd
