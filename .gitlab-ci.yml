@@ -11,3 +11,4 @@ notify-job:
     script:
         - echo "Я работаю"
         - pwd
+        - docker ps -a
