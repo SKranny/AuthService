@@ -6,13 +6,14 @@ services:
 variables:
     DOCKER_DRIVER: overlay
 stages:
-    - pre
+    - qwer
     - build
     - deploy
-pre-stage:
+
+pre_stage:
     image: docker:latest
     stage:
-        - pre
+        - qwer
     script:
         - docker --version
 build:
