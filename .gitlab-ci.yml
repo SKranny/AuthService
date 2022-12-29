@@ -81,7 +81,7 @@ deploy:
         - ssh-keyscan 158.160.6.130 >> ~/.ssh/known_hosts
         - chmod 644 ~/.ssh/known_hosts
     script:
-        - ssh deployer@158.160.6.130 "echo "123456" | sudo docker ps -a;
+        - ssh deployer@158.160.6.130 "echo "123456" | sudo -S docker ps -a;
             sudo docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io;
             sudo docker-compose stop;
             sudo docker-compose up -d"
