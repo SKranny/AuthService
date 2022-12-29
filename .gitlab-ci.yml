@@ -1,5 +1,7 @@
 image: maven:3.8.6-openjdk-11
 
+services:
+    - docker:dind
 
 variables:
     MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
