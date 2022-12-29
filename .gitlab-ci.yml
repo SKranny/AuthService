@@ -1,14 +1,32 @@
-image: maven:latest
+image: maven:3.8.6-openjdk-11
 
 variables:
     MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
 
-stages:
-    - notify
 
-notify-job:
-    stage: notify
+stages:
+    - clean
+    - build
+    - build-image
+    - publish-image
+    - deploy
+
+build:
+    stage: clean
+    only:
+        - develop
+    except:
+        - tags
     script:
-        - echo "Я работаю"
-        - pwd
-        - docker ps -a
+        - echo 'Clean project'
+        - mvn clean install
+    artifacts:
+        paths:
+            - target/*.jar
+
+deploy:
+    stage: docker
+    script:
+        - docker build -t auth-service:latest .
+        - docker tag auth-service:latest 158.160.6.130/auth-service:latest
+        - docker push 158.160.6.130/auth-service:latest
