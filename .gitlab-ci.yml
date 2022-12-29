@@ -1,17 +1,7 @@
 image: maven:3.8.6-openjdk-11
 
-services:
-    - name: docker:dind
-      entrypoint: ["env", "-u", "DOCKER_HOST"]
-      command: ["dockerd-entrypoint.sh"]
-
-
 variables:
     MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
-    DOCKER_HOST: tcp://docker:2375/
-    DOCKER_DRIVER: overlay2
-    # See https://github.com/docker-library/docker/pull/166
-    DOCKER_TLS_CERTDIR: ""
 
 stages:
     - build
