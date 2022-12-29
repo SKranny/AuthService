@@ -13,8 +13,7 @@ stages:
 
 QWERTY:
     image: docker:latest
-    stage:
-        - qwer
+    stage: qwer
     script:
         - docker --version
 build:
