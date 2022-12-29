@@ -11,6 +11,7 @@ variables:
     DOCKER_HOST: tcp://dockerdaemon:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
+    RUNNER_IP: "158.160.6.130"
 
 stages:
     - build
@@ -57,6 +58,6 @@ deploy:
     except:
         - tags
     script:
-        - docker build --no-cache -t auth-service:latest .
-        - docker tag auth-service:latest http://158.160.6.130:5000/auth-service:latest
-        - docker push http://158.160.6.130:5000/auth-service:latest
+        - docker login -u konkurent -p Lyceum1703 docker.io
+        - docker build --no-cache -t konkurent/test/auth-service:latest .
+        - docker push konkurent/test/auth-service:latest
