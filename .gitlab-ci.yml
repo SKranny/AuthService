@@ -1,4 +1,5 @@
 image: maven:3.8.6-openjdk-11
+
 variables:
     MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
 
@@ -47,7 +48,6 @@ deploy:
     except:
         - tags
     script:
-        - ls -l
-        - docker build -t auth-service:latest .
+        - docker build --no-cache -t auth-service:latest .
         - docker tag auth-service:latest 158.160.6.130/auth-service:latest
         - docker push 158.160.6.130/auth-service:latest
