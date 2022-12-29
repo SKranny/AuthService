@@ -49,5 +49,5 @@ deploy:
         - tags
     script:
         - docker build --no-cache -t auth-service:latest .
-        - docker tag auth-service:latest 158.160.6.130/auth-service:latest
-        - docker push 158.160.6.130/auth-service:latest
+        - docker tag auth-service:latest 158.160.6.130:5000/auth-service:latest
+        - docker push 158.160.6.130:5000/auth-service:latest
