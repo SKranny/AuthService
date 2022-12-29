@@ -11,11 +11,12 @@ variables:
     DOCKER_HOST: tcp://dockerdaemon:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-    RUNNER_IP: "158.160.6.130"
+    SERVER_IP: "158.160.6.130"
 
 stages:
     - build
     - package
+    - build and push image
     - deploy
 
 
@@ -50,14 +51,32 @@ package:
             - ./target
             - ./.m2
 
-deploy:
+build_and_push_image:
     image: docker:latest
+    stage: build and push image
+    only:
+        - develop
+    except:
+        - tags
+    before_script:
+        - docker login -u $DOCKER_LOGIN -p @DOCKER_PASS docker.io
+    script:
+        - docker build --no-cache -t $DOCKER_LOGIN/auth-service:latest .
+        - docker push $DOCKER_LOGIN/auth-service:latest
+
+deploy:
+    image: ubuntu:latest
     stage: deploy
     only:
         - develop
     except:
         - tags
+    before_script:
+        - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     script:
-        - docker login -u konkurent -p Lyceum1703 docker.io
-        - docker build --no-cache -t konkurent/test:latest .
-        - docker push konkurent/test:latest
+        - ssh kechin@SERVER_IP "docker ps -a"
