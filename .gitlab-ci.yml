@@ -57,7 +57,6 @@ deploy:
     except:
         - tags
     script:
-        - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
         - docker build --no-cache -t auth-service:latest .
-        - docker tag auth-service:latest $CI_REGISTRY/auth-service:latest
-        - docker push $CI_REGISTRY/auth-service:latest
+        - docker tag auth-service:latest http://158.160.6.130:5000/auth-service:latest
+        - docker push http://158.160.6.130:5000/auth-service:latest
