@@ -6,9 +6,15 @@ services:
 variables:
     DOCKER_DRIVER: overlay
 stages:
+    - pre
     - build
     - deploy
-
+pre:
+    image: docker:latest
+    stage:
+        - pre
+    script:
+        - docker --version
 build:
     image: maven:3.8.6-openjdk-11
     stage: build
@@ -24,6 +30,7 @@ build:
             - target/*.jar
 
 deploy:
+    image: docker:latest
     stage: deploy
     only:
         - develop
