@@ -80,6 +80,7 @@ deploy:
         - chmod 700 ~/.ssh
         - echo "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     script:
+        - ssh deployer@$SERVER_IP
         - docker ps -a
         - docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io
         - sudo docker-compose stop
