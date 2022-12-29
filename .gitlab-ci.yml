@@ -9,7 +9,7 @@ stages:
     - deploy
 
 build:
-    stage: clean
+    stage: build
     only:
         - develop
     except:
@@ -23,6 +23,10 @@ build:
 
 deploy:
     stage: deploy
+    only:
+        - develop
+    except:
+        - tags
     script:
         - docker build -t auth-service:latest .
         - docker tag auth-service:latest 158.160.6.130/auth-service:latest
