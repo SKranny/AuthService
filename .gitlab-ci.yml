@@ -2,14 +2,14 @@ image: docker:latest
 
 services:
     - docker:dind
-    -
+
 variables:
     DOCKER_DRIVER: overlay
 stages:
     - pre
     - build
     - deploy
-pre:
+pre-stage:
     image: docker:latest
     stage:
         - pre
