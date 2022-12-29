@@ -5,12 +5,13 @@ services:
 
 variables:
     DOCKER_DRIVER: overlay
+
 stages:
     - qwer
     - build
     - deploy
 
-qwerewr:
+QWERTY:
     image: docker:latest
     stage:
         - qwer
