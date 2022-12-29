@@ -1,28 +1,46 @@
-image: docker:latest
 
 variables:
-    DOCKER_DRIVER: overlay
+    MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
 
 stages:
     - build
+    - package
     - deploy
 
 
 build:
-    image: maven:3.8.6-openjdk-11
     stage: build
     only:
         - develop
     except:
         - tags
     script:
-        - echo 'Clean project'
-        - "mvn clean install"
+        - echo 'Build project'
+        - 'mvn --settings $MAVEN_SETTINGS compile'
+    cache:
+        paths:
+            - ./target
+            - ./.m2
+
+package:
+    stage: package
+    only:
+        - develop
+    except:
+        - tags
+    script:
+        - 'mvn --settings $MAVEN_SETTINGS package -Dmaven.test.skip=true'
     artifacts:
         paths:
             - target/*.jar
+    cache:
+        policy: pull
+        paths:
+            - ./target
+            - ./.m2
 
 deploy:
+    image: docker:latest
     stage: deploy
     only:
         - develop
