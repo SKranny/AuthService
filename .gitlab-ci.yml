@@ -5,10 +5,7 @@ variables:
 
 
 stages:
-    - clean
     - build
-    - build-image
-    - publish-image
     - deploy
 
 build:
@@ -25,7 +22,7 @@ build:
             - target/*.jar
 
 deploy:
-    stage: docker
+    stage: deploy
     script:
         - docker build -t auth-service:latest .
         - docker tag auth-service:latest 158.160.6.130/auth-service:latest
