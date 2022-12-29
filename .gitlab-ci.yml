@@ -80,4 +80,4 @@ deploy:
         - chmod 700 ~/.ssh
         - e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     script:
-        - ssh kechin@SERVER_IP "docker ps -a"
+        - ssh $USER_NAME@$SERVER_IP "docker ps -a"
