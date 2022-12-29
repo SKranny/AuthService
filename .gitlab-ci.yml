@@ -79,8 +79,10 @@ deploy:
         - mkdir -p ~/.ssh
         - chmod 700 ~/.ssh
         - echo "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        - ssh-keyscan 158.160.6.130 >> ~/.ssh/known_hosts
+        - chmod 644 ~/.ssh/known_hosts
     script:
-        - ssh -t deployer@$SERVER_IP
+        - ssh deployer@158.160.6.130
         - docker ps -a
         - docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io
         - sudo docker-compose stop
