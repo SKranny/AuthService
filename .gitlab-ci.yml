@@ -83,7 +83,7 @@ deploy:
         - chmod 644 ~/.ssh/known_hosts
     script:
         - ssh deployer@158.160.6.130
-        - docker ps -a
-        - docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io
+        - sudo docker ps -a
+        - sudo docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io
         - sudo docker-compose stop
         - sudo docker-compose up -d
