@@ -1,14 +1,16 @@
-image: maven:3.8.6-openjdk-11
+image: docker:latest
 
+services:
+    - docker:dind
+    -
 variables:
-    MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
-
-
+    DOCKER_DRIVER: overlay
 stages:
     - build
     - deploy
 
 build:
+    image: maven:3.8.6-openjdk-11
     stage: build
     only:
         - develop
@@ -16,7 +18,7 @@ build:
         - tags
     script:
         - echo 'Clean project'
-        - mvn clean install
+        - "mvn clean install"
     artifacts:
         paths:
             - target/*.jar
