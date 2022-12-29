@@ -59,7 +59,7 @@ build_and_push_image:
     except:
         - tags
     before_script:
-        - docker login -u $DOCKER_LOGIN" -p $DOCKER_PASS docker.io
+        - docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io
     script:
         - docker build --no-cache -t $DOCKER_LOGIN/auth-service:latest .
         - docker push $DOCKER_LOGIN/auth-service:latest
@@ -80,4 +80,7 @@ deploy:
         - chmod 700 ~/.ssh
         - e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     script:
-        - ssh $USER_NAME@$SERVER_IP "docker ps -a"
+        - ssh $USER_NAME@$SERVER_IP
+        - echo "cherry"
+        - sudo docker ps -a
+        - echo "123456"
