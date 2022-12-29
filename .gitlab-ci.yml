@@ -76,6 +76,7 @@ deploy:
         - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
         - eval $(ssh-agent -s)
         - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        - echo "cherry"
         - mkdir -p ~/.ssh
         - chmod 700 ~/.ssh
         - e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
@@ -84,3 +85,6 @@ deploy:
         - echo "cherry"
         - sudo docker ps -a
         - echo "123456"
+        - docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io
+        - sudo docker-compose stop
+        - sudo docker-compose up -d
