@@ -59,5 +59,5 @@ deploy:
         - tags
     script:
         - docker login -u konkurent -p Lyceum1703 docker.io
-        - docker build --no-cache -t konkurent/test/auth-service:latest .
-        - docker push konkurent/test/auth-service:latest
+        - docker build --no-cache -t konkurent/test:latest .
+        - docker push konkurent/test:latest
