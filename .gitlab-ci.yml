@@ -10,7 +10,7 @@ stages:
     - build
     - deploy
 
-pre_stage:
+qwerewr:
     image: docker:latest
     stage:
         - qwer
