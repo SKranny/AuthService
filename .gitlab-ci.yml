@@ -16,7 +16,7 @@ build:
         - tags
     script:
         - echo 'Build project'
-        - 'mvn --settings $MAVEN_SETTINGS compile'
+        - 'mvn -Dmaven.repo.local=./.m2/repository compile'
     cache:
         paths:
             - ./target
@@ -29,7 +29,7 @@ package:
     except:
         - tags
     script:
-        - 'mvn --settings $MAVEN_SETTINGS package -Dmaven.test.skip=true'
+        - 'mvn package -Dmaven.test.skip=true'
     artifacts:
         paths:
             - target/*.jar
