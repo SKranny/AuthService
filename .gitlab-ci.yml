@@ -55,8 +55,9 @@ deploy:
         - develop
     except:
         - tags
+    before_script:
+        - echo "dep" | docker login 158.160.6.130:5000 --username dep --password-stdin
     script:
-        - docker login 158.160.6.130:5000 -u deployer --password deployer
         - docker build --no-cache -t auth-service:latest .
         - docker tag auth-service:latest 158.160.6.130:5000/auth-service:latest
         - docker push 158.160.6.130:5000/auth-service:latest
