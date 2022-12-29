@@ -1,21 +1,13 @@
 image: docker:latest
 
-services:
-    - docker:dind
-
 variables:
     DOCKER_DRIVER: overlay
 
 stages:
-    - qwer
     - build
     - deploy
 
-QWERTY:
-    image: docker:latest
-    stage: qwer
-    script:
-        - docker --version
+
 build:
     image: maven:3.8.6-openjdk-11
     stage: build
@@ -31,13 +23,13 @@ build:
             - target/*.jar
 
 deploy:
-    image: docker:latest
     stage: deploy
     only:
         - develop
     except:
         - tags
     script:
+        - ls -l
         - docker build -t auth-service:latest .
         - docker tag auth-service:latest 158.160.6.130/auth-service:latest
         - docker push 158.160.6.130/auth-service:latest
