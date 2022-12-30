@@ -10,7 +10,6 @@ variables:
     DOCKER_HOST: tcp://dockerdaemon:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-    SERVER_IP: "158.160.6.130"
 
 stages:
     - build
@@ -78,10 +77,10 @@ deploy:
         - mkdir -p ~/.ssh
         - chmod 700 ~/.ssh
         - echo "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        - ssh-keyscan 158.160.6.130 >> ~/.ssh/known_hosts
+        - ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
         - chmod 644 ~/.ssh/known_hosts
     script:
-        - ssh deployer@158.160.6.130 "
-            echo "123456" | sudo -S docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io;
-            echo "123456" | sudo -S docker-compose stop;
-            echo "123456" | sudo -S docker-compose up -d"
+        - ssh deployer@$SERVER_IP "
+            echo "$SERVER_PASS" | sudo -S docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io;
+            echo "$SERVER_PASS" | sudo -S docker-compose stop auth-service;
+            echo "$SERVER_PASS" | sudo -S docker-compose up -d --build auth-service"
