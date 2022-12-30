@@ -82,5 +82,5 @@ deploy:
     script:
         - ssh deployer@$SERVER_IP "
             echo "$SERVER_PASS" | sudo -S docker login -u $DOCKER_LOGIN -p $DOCKER_PASS docker.io;
-            echo "$SERVER_PASS" | sudo -S docker-compose stop auth-service;
-            echo "$SERVER_PASS" | sudo -S docker-compose up -d --build --pull auth-service"
+            echo "$SERVER_PASS" | sudo -S docker-compose stop auth;
+            echo "$SERVER_PASS" | sudo -S docker-compose up -d --build --force-recreate --pull auth"
