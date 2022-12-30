@@ -10,7 +10,7 @@ variables:
     DOCKER_HOST: tcp://dockerdaemon:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-    MAVEN_OPTS: "-Dmaven.test.skip=true -Dmaven.repo.local=./.m2/repository -U"
+    MAVEN_OPTS: "-Dmaven.test.skip=true -Dmaven.repo.local=./.m2/repository"
 
 stages:
     - build
@@ -27,7 +27,7 @@ build:
         - tags
     script:
         - echo 'Build project'
-        - 'mvn clean compile $MAVEN_OPTS'
+        - 'mvn $MAVEN_OPTS clean compile -U'
     cache:
         paths:
             - ./target
@@ -40,7 +40,7 @@ package:
     except:
         - tags
     script:
-        - 'mvn package $MAVEN_OPTS'
+        - 'mvn $MAVEN_OPTS package -U'
     artifacts:
         paths:
             - target/*.jar
