@@ -19,7 +19,7 @@ import javax.validation.constraints.Email;
 public class AuthController {
     private final AuthService authService;
 
-    @Operation(summary = "Вход пользователя используя email/password")
+    @Operation(summary = "Вход пользователя используя email и password")
     @PostMapping("/login")
     public String login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);
