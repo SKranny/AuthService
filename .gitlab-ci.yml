@@ -39,7 +39,7 @@ package:
     except:
         - tags
     script:
-        - 'mvn clean compile -Dmaven.test.skip=true -Dmaven.repo.local=./.m2/repository -s .m2/settings.xml -U'
+        - 'mvn package -Dmaven.test.skip=true -Dmaven.repo.local=./.m2/repository -s .m2/settings.xml -U'
     artifacts:
         paths:
             - target/*.jar
