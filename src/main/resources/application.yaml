@@ -39,6 +39,9 @@ jwt:
   life-time: ${LIFE_TIME}
 
 eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    lease-expiration-duration-in-seconds: 5
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8081/eureka}
