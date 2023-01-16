@@ -44,7 +44,7 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return String.format("%s %s", lastName, firstName);
+        return lastName + " " + firstName;
     }
 
     public static PersonDetails build(PersonDTO personDTO) {
