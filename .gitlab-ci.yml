@@ -10,7 +10,6 @@ stages:
     - build and push image
     - deploy
 
-
 build:
     stage: build
     only:
