@@ -33,7 +33,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests(config -> {
                     config.antMatchers("/api/v1/auth/**").permitAll();
-                    config.anyRequest().authenticated();
+                    config.antMatchers("docs/**").permitAll();
+                    //    config.anyRequest().authenticated();
                 })
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
