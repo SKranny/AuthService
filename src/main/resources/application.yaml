@@ -4,6 +4,7 @@ spring:
     name: auth-service
   redis:
     port: ${REDIS_PORT:6379}
+    host: ${REDIS_HOST:localhost}
   mail:
     host: smtp.gmail.com
     port: 587

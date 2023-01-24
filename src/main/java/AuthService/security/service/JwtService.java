@@ -26,6 +26,7 @@ public class JwtService {
         Map<String, Object> claims = new HashMap<>();
         PersonDetails personDetails = (PersonDetails) userDetails;
 
+        claims.put("id", personDetails.getId());
         claims.put("email", personDetails.getEmail());
         claims.put("roles", personDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
