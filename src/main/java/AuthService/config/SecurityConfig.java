@@ -33,8 +33,9 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests(config -> {
                     config.antMatchers("/api/v1/auth/**").permitAll();
-                    config.antMatchers("docs/**").permitAll();
-                    //    config.anyRequest().authenticated();
+                    config.antMatchers("/v3/api-docs/**").permitAll();
+                    config.antMatchers("/docs/**").permitAll();
+                    config.anyRequest().permitAll();
                 })
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

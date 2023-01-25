@@ -3,8 +3,7 @@ spring:
   application:
     name: auth-service
   redis:
-    port: ${REDIS_PORT:6379}
-    host: ${REDIS_HOST:localhost}
+    url: ${REDIS_URL:redis://localhost:6000}
   mail:
     host: smtp.gmail.com
     port: 587
@@ -50,3 +49,6 @@ eureka:
 auth:
   service:
     base-url: "http://localhost:%s/"
+
+frontend:
+  port: 8080

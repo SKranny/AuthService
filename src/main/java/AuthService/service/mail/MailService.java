@@ -21,13 +21,13 @@ public class MailService {
     @Value("${spring.mail.username}")
     private String authMail;
 
-    @Value("${server.port}")
+    @Value("${frontend.port}")
     private Integer serverPort;
 
     @Value("${auth.service.base-url}")
     private String baseAuthUrl;
 
-    private static final String RECOVERY_MAIL_TEMPLATE = "<a href=\"%s/password/recovery/%s\">Follow the link to recover your password</a>";
+    private static final String RECOVERY_MAIL_TEMPLATE = "<a href=\"%spassword/recovery/%s\">Follow the link to recover your password</a>";
 
     public void sendRecoveryMail(String[] to, String uuid) {
         String mess = String.format(RECOVERY_MAIL_TEMPLATE, getBaseAuthUrl(), uuid);
