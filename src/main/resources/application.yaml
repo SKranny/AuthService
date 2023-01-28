@@ -2,8 +2,14 @@
 spring:
   application:
     name: auth-service
+    bootstrap-servers: ${KAFKA_HOST:localhost:9092}
   redis:
     url: ${REDIS_URL:redis://localhost:6000}
+  kafka:
+    consumer:
+      group-id: auth-service-id
+    bootstrap-servers: ${KAFKA_HOST:localhost:9092}
+
   mail:
     host: smtp.gmail.com
     port: 587
