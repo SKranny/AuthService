@@ -80,7 +80,6 @@ public class AuthService {
     public String createCustomer(RegisterRequest request) {
         assertPasswordEqual(request.getPassword(), request.getConfirmPassword());
         assertCodeEqual(request.getCode());
-
         return buildJwtToken(PersonDetails.build(personService.createPerson(buildCustomer(request))));
     }
 
