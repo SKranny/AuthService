@@ -54,7 +54,7 @@ eureka:
 
 auth:
   service:
-    base-url: "http://localhost:%s/"
+    base-url: ${BASE_URL:"http://localhost:%s/"}
 
 frontend:
-  port: 8080
+  port: ${FRONTEND_PORT:8080}
