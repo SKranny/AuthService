@@ -1,11 +1,5 @@
-### Java Spring template project
+### Java Spring project
+Auth-service
 
-This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
-
-Improvements can be proposed in the [original project](https://gitlab.com/gitlab-org/project-templates/spring).
-
-### CI/CD with Auto DevOps
-
-This template is compatible with [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/).
-
-If Auto DevOps is not already enabled for this project, you can [turn it on](https://docs.gitlab.com/ee/topics/autodevops/#enabling-auto-devops) in the project settings.    
+This service is responsible for authenticating new users and their sessions of site visits.
+Here, the user receives their authorization token and uses it to use all the features provided by our social network.    
