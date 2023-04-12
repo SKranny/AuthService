@@ -1,0 +1,60 @@
+#Синтаксис переменной окружения ${имя_переменной:значение_переменной_по_умолчанию}
+spring:
+  application:
+    name: auth-service
+    bootstrap-servers: ${KAFKA_HOST:localhost:9092}
+  redis:
+    url: ${REDIS_URL:redis://localhost:6000}
+  kafka:
+    consumer:
+      group-id: auth-service-id
+    bootstrap-servers: ${KAFKA_HOST:localhost:9092}
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_LOGIN}
+    password: ${MAIL_PASSWORD} #Это пароль от почты для ПРИЛОЖЕНИЯ, которые выдается гуглом
+    properties:
+      mail:
+        smtp:
+          ssl:
+            protocols: TLSv1.2
+          auth: true
+          starttls:
+            enable: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  cloud:
+    config:
+      enabled: false
+
+server:
+  port: ${SERVER_PORT:8082}
+  ssl:
+    enabled: false
+    key-store-type: PKCS12
+
+springdoc:
+  swagger-ui:
+    path: /docs/
+
+jwt:
+  secret-code: ${SECRET_KEY}
+  life-time: ${LIFE_TIME}
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    lease-expiration-duration-in-seconds: 5
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8081/eureka}
+
+auth:
+  service:
+    base-url: ${BASE_URL:"http://localhost:%s/"}
+
+frontend:
+  port: ${FRONTEND_PORT:8080}

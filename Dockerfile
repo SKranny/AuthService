@@ -1,10 +1,9 @@
-FROM maven:3-jdk-8-alpine
+FROM openjdk:11
 
-WORKDIR /usr/src/app
+WORKDIR /build
 
-COPY . /usr/src/app
-RUN mvn package
+ADD /target/AuthService-0.0.1-SNAPSHOT.jar ./auth-service.jar
 
-ENV PORT 5000
-EXPOSE $PORT
-CMD [ "sh", "-c", "mvn -Dserver.port=${PORT} spring-boot:run" ]
+EXPOSE 8084
+
+CMD java -jar auth-service.jar
