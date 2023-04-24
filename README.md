@@ -33,3 +33,5 @@ Here the user receives his authorization token to use all the features provided 
     - EUREKA_URI (Address of your Eureka server. Specify it if you are not going to use the default address: http://localhost:8081/eureka)
     - REDIS_URL (This is the address of your Redis database. Specify it manually if you are going to use the default: redis://localhost:6000)
 2. Run the file AuthApplication.java.
+
+If you want to see the full functionality of the service go to the controllers folder inside the project, where each method will have a brief description of its functionality.
